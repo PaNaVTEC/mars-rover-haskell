@@ -23,12 +23,12 @@ main = hspec spec
 
 spec :: Spec
 spec = do
-  describe "Rotation" $ do
-    it "left" $ do
+  describe "Rotations" $ do
+    it "1 Left" $ do
       moveMars "L" `shouldBe` "0,0,W"
-    it "twice to the left" $ do
+    it "2 Left" $ do
       moveMars "LL" `shouldBe` "0,0,S"
-    it "3 times to the left" $ do
+    it "3 Left" $ do
       moveMars "LLL" `shouldBe` "0,0,E"
-    it "4 times to the left should be the original position" $ do
+    it "4 Left" $ do
       moveMars "LLLL" `shouldBe` "0,0,N"
