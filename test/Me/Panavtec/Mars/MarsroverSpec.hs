@@ -32,9 +32,12 @@ spec = do
       moveMars "LLL" `shouldBe` "0,0,E"
     it "4 Left" $ do
       moveMars "LLLL" `shouldBe` "0,0,N"
+
     it "1 Right" $ do
       moveMars "R" `shouldBe` "0,0,E"
     it "2 Right" $ do
       moveMars "RR" `shouldBe` "0,0,S"
     it "3 Right" $ do
       moveMars "RRR" `shouldBe` "0,0,W"
+    it "4 Right" $ do
+      moveMars "RRRR" `shouldBe` "0,0,N"

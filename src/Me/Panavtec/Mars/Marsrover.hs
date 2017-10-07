@@ -12,6 +12,7 @@ rotateRight :: String -> String
 rotateRight (x:',':y:',':'N':_) =  x:',':y:',':'E':[]
 rotateRight (x:',':y:',':'E':_) =  x:',':y:',':'S':[]
 rotateRight (x:',':y:',':'S':_) =  x:',':y:',':'W':[]
+rotateRight (x:',':y:',':'W':_) =  x:',':y:',':'N':[]
 
 rotateLeft :: String -> String
 rotateLeft (x:',':y:',':'N':_) =  x:',':y:',':'W':[]
