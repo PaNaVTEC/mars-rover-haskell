@@ -36,3 +36,5 @@ spec = do
       moveMars "R" `shouldBe` "0,0,E"
     it "2 Right" $ do
       moveMars "RR" `shouldBe` "0,0,S"
+    it "3 Right" $ do
+      moveMars "RRR" `shouldBe` "0,0,W"

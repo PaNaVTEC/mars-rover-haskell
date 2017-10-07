@@ -11,6 +11,7 @@ moveMars orders = next orders "0,0,N"
 rotateRight :: String -> String
 rotateRight (x:',':y:',':'N':_) =  x:',':y:',':'E':[]
 rotateRight (x:',':y:',':'E':_) =  x:',':y:',':'S':[]
+rotateRight (x:',':y:',':'S':_) =  x:',':y:',':'W':[]
 
 rotateLeft :: String -> String
 rotateLeft (x:',':y:',':'N':_) =  x:',':y:',':'W':[]
