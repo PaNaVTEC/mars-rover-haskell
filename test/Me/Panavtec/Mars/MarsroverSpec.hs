@@ -26,3 +26,5 @@ spec = do
   describe "Rotation" $ do
     it "left" $ do
       moveMars "L" `shouldBe` "0,0,W"
+    it "twice to the left" $ do
+      moveMars "LL" `shouldBe` "0,0,S"

@@ -3,4 +3,7 @@ module Me.Panavtec.Mars.Marsrover (
   ) where
 
 moveMars :: String -> String
-moveMars s = "0,0,W"
+moveMars orders = next orders "0,0,N"
+  where next [] currentPosition           = currentPosition
+        next ('L' : restOfOrders) "0,0,N" =  next restOfOrders "0,0,W"
+        next ('L' : restOfOrders) "0,0,W" =  next restOfOrders "0,0,S"
