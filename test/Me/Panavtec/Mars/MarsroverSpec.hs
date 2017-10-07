@@ -30,3 +30,5 @@ spec = do
       moveMars "LL" `shouldBe` "0,0,S"
     it "3 times to the left" $ do
       moveMars "LLL" `shouldBe` "0,0,E"
+    it "4 times to the left should be the original position" $ do
+      moveMars "LLLL" `shouldBe` "0,0,N"
