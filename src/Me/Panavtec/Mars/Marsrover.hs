@@ -4,8 +4,11 @@ module Me.Panavtec.Mars.Marsrover (
 
 moveMars :: String -> String
 moveMars orders = next orders "0,0,N"
-  where next [] currentPosition     = currentPosition
-        next ('L' : orders) (x : ',' : y : ',' : 'N' : _) =  next orders "0,0,W"
-        next ('L' : orders) (x : ',' : y : ',' : 'W' : _)=  next orders "0,0,S"
-        next ('L' : orders) (x : ',' : y : ',' : 'S' : _)=  next orders "0,0,E"
-        next ('L' : orders) (x : ',' : y : ',' : 'E' : _)=  next orders "0,0,N"
+  where next [] currentPosition      = currentPosition
+        next ('L' : orders) position =  next orders (rotateLeft position)
+
+rotateLeft :: String -> String
+rotateLeft (x : ',' : y : ',' : 'N' : _) =  "0,0,W"
+rotateLeft (x : ',' : y : ',' : 'W' : _) =  "0,0,S"
+rotateLeft (x : ',' : y : ',' : 'S' : _) =  "0,0,E"
+rotateLeft (x : ',' : y : ',' : 'E' : _) =  "0,0,N"
