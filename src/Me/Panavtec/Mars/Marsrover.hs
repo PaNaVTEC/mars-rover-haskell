@@ -37,8 +37,8 @@ move (x:',':y:',':direction:_)
   | direction == 'W' = makePosition (decrement x) y direction
   | direction == 'S' = makePosition x (decrement y) direction
   where
-    increment bound = modify bound (\b -> b + 1)
-    decrement bound = modify bound (\b -> b - 1)
+    increment bound = modify bound (+1)
+    decrement bound = modify bound (subtract 1)
     modify bound f = intToDigit $ bounds !! noNegatives (f $ digitToInt bound)
     noNegatives a
       | a < 0 = boardBound
