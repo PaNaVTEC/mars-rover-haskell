@@ -13,15 +13,15 @@ initialPosition = "0,0,N"
 moveMars :: String -> String
 moveMars orders = foldl (\position order -> if order == 'M' then move position else rotate order position) initialPosition orders
 
-createPosition :: Char -> Char -> Char -> String
-createPosition x y d = x : ',' : y : ',' : d : []
+makePosition :: Char -> Char -> Char -> String
+makePosition x y d = x : ',' : y : ',' : d : []
 
 move :: String -> String
 move (x:',':y:',':direction:_)
-  | direction == 'E' = createPosition (increment x) y direction
-  | direction == 'N' = createPosition x (increment y) direction
-  | direction == 'W' = createPosition (decrement x) y direction
-  | direction == 'S' = createPosition x (decrement y) direction
+  | direction == 'E' = makePosition (increment x) y direction
+  | direction == 'N' = makePosition x (increment y) direction
+  | direction == 'W' = makePosition (decrement x) y direction
+  | direction == 'S' = makePosition x (decrement y) direction
   where
     bounds = cycle([0..9])
     increment bound = intToDigit $ bounds !! (digitToInt bound + 1)
@@ -29,7 +29,7 @@ move (x:',':y:',':direction:_)
     decrement bound = intToDigit $ bounds !! checkNegative bound
 
 rotate :: Char -> String -> String
-rotate direction (x:',':y:',':currentDirection:_) = createPosition x y nextDirection
+rotate direction (x:',':y:',':currentDirection:_) = makePosition x y nextDirection
   where directions = if direction == 'L' then leftDirection else rightDirection
         nextDirection = directions !! nextIndex
         currentIndex = elemIndex currentDirection directions
