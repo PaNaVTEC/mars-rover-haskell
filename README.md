@@ -1,3 +1,3 @@
-# mars-rober-kata
+# mars-rover-kata
 
-add description of mars-rober-kata here
+add description of mars-rover-kata here
