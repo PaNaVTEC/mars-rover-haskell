@@ -47,3 +47,5 @@ spec = do
   describe "Movements" $ do
     it "moves one point towards nord" $ do
       moveMars "M" `shouldBe` "0,1,N"
+    it "moves twice towards nord" $ do
+      moveMars "MM" `shouldBe` "0,2,N"
