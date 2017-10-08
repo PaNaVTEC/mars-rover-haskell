@@ -19,7 +19,10 @@ initialPosition :: String
 initialPosition = "0,0,N"
 
 moveMars :: String -> String
-moveMars orders = foldl (\position order -> if order == 'M' then move position else rotate order position) initialPosition orders
+moveMars = foldl interpret initialPosition
+  where interpret position order
+          | order == 'M' = move position
+          | order == 'R' || order == 'L'  = rotate order position
 
 makePosition :: Char -> Char -> Char -> String
 makePosition x y d = x : ',' : y : ',' : d : []
