@@ -6,6 +6,7 @@ import           Data.Char
 import           Data.List
 import           Data.Maybe
 
+bounds = cycle([0..9])
 leftDirection = cycle(['N', 'W', 'S', 'E'])
 rightDirection = cycle(['N', 'E', 'S', 'W'])
 initialPosition = "0,0,N"
@@ -23,7 +24,6 @@ move (x:',':y:',':direction:_)
   | direction == 'W' = makePosition (decrement x) y direction
   | direction == 'S' = makePosition x (decrement y) direction
   where
-    bounds = cycle([0..9])
     increment bound = intToDigit $ bounds !! (digitToInt bound + 1)
     checkNegative bound = if bound == '0' then 9 else digitToInt bound - 1
     decrement bound = intToDigit $ bounds !! checkNegative bound
