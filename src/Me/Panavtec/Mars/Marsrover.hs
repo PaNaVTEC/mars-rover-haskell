@@ -17,8 +17,10 @@ move :: String -> String
 move (x:',':y:',':direction:_)
   | direction == 'E' = moveEast:',':y:',':'E':[]
   | direction == 'N' = x:',':moveNorth:',':'N':[]
-  where moveNorth = intToDigit $ cycle([0..9]) !! (digitToInt y + 1)
-        moveEast = intToDigit ((digitToInt x) + 1)
+  where
+    bounds = cycle([0..9])
+    moveNorth = intToDigit $ bounds !! (digitToInt y + 1)
+    moveEast = intToDigit ((digitToInt x) + 1)
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
