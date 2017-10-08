@@ -49,3 +49,5 @@ spec = do
       moveMars "M" `shouldBe` "0,1,N"
     it "moves twice towards nord" $ do
       moveMars "MM" `shouldBe` "0,2,N"
+    it "moves 1 position in X when facing east" $ do
+      moveMars "RM" `shouldBe` "1,0,E"
