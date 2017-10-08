@@ -37,11 +37,13 @@ move (x:',':y:',':direction:_)
   | direction == 'W' = makePosition (decrement x) y direction
   | direction == 'S' = makePosition x (decrement y) direction
   where
-    increment bound = intToDigit $ bounds !! (digitToInt bound + 1)
-    decrement bound = intToDigit $ bounds !! checkNegative bound
-    checkNegative bound
-      | bound == '0' = boardBound
-      | otherwise = digitToInt bound - 1
+    increment bound = modify bound (\b -> b + 1)
+    decrement bound = modify bound (\b -> b - 1)
+    modify bound f = intToDigit $ bounds !! checkBounds (digitToInt bound) f
+    checkBounds bound f = noNegatives $ f bound
+    noNegatives a
+      | a < 0 = boardBound
+      | otherwise = a
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = makePosition x y nextDirection
