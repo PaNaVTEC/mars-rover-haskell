@@ -17,11 +17,15 @@ move :: String -> String
 move (x:',':y:',':direction:_)
   | direction == 'E' = moveEast:',':y:',':'E':[]
   | direction == 'N' = x:',':moveNorth:',':'N':[]
+  | direction == 'W' = moveWest:',':y:',':'W':[]
   where
     bounds = cycle([0..9])
     incrementBound bound = intToDigit $ bounds !! (digitToInt bound + 1)
+    checkNegative bound = if bound == '0' then 9 else digitToInt bound - 1
+    decrementBound bound = intToDigit $ bounds !! checkNegative bound
     moveNorth = incrementBound y
     moveEast = incrementBound x
+    moveWest = decrementBound x
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
