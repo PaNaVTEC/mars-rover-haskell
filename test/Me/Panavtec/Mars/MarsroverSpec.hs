@@ -44,3 +44,6 @@ spec = do
 
     it "Combining LR" $ do
       moveMars "LR" `shouldBe` "0,0,N"
+  describe "Movements" $ do
+    it "moves one point towards nord" $ do
+      moveMars "M" `shouldBe` "0,1,N"

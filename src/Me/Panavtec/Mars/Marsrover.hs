@@ -2,6 +2,7 @@ module Me.Panavtec.Mars.Marsrover (
   moveMars
   ) where
 
+import           Data.Char
 import           Data.List
 import           Data.Maybe
 
@@ -10,7 +11,11 @@ rightDirection = cycle(['N', 'E', 'S', 'W'])
 initialPosition = "0,0,N"
 
 moveMars :: String -> String
-moveMars orders = foldl (\position order -> rotate order position) initialPosition orders
+moveMars orders = foldl (\position order -> if order == 'M' then move position else rotate order position) initialPosition orders
+
+move :: String -> String
+move (x:',':y:',':direction:_) = x:',':nextY:',':direction:[]
+  where nextY = intToDigit ((digitToInt y) + 1)
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
