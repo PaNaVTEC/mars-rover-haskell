@@ -39,8 +39,7 @@ move (x:',':y:',':direction:_)
   where
     increment bound = modify bound (\b -> b + 1)
     decrement bound = modify bound (\b -> b - 1)
-    modify bound f = intToDigit $ bounds !! checkBounds (digitToInt bound) f
-    checkBounds bound f = noNegatives $ f bound
+    modify bound f = intToDigit $ bounds !! noNegatives (f $ digitToInt bound)
     noNegatives a
       | a < 0 = boardBound
       | otherwise = a
