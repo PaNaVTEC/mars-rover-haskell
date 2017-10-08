@@ -18,7 +18,7 @@ move (x:',':y:',':direction:_)
   | direction == 'E' = moveEast:',':y:',':'E':[]
   | direction == 'N' = x:',':moveNorth:',':'N':[]
   | direction == 'W' = moveWest:',':y:',':'W':[]
-  | direction == 'S' = x:',':moveNorth:',':'S':[]
+  | direction == 'S' = x:',':moveSouth:',':'S':[]
   where
     bounds = cycle([0..9])
     incrementBound bound = intToDigit $ bounds !! (digitToInt bound + 1)
