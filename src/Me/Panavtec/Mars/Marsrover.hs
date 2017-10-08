@@ -18,19 +18,15 @@ createPosition x y d = x : ',' : y : ',' : d : []
 
 move :: String -> String
 move (x:',':y:',':direction:_)
-  | direction == 'E' = createPosition moveEast y direction
-  | direction == 'N' = createPosition x moveNorth direction
-  | direction == 'W' = createPosition moveWest y direction
-  | direction == 'S' = createPosition x moveSouth direction
+  | direction == 'E' = createPosition (increment x) y direction
+  | direction == 'N' = createPosition x (increment y) direction
+  | direction == 'W' = createPosition (decrement x) y direction
+  | direction == 'S' = createPosition x (decrement y) direction
   where
     bounds = cycle([0..9])
-    incrementBound bound = intToDigit $ bounds !! (digitToInt bound + 1)
+    increment bound = intToDigit $ bounds !! (digitToInt bound + 1)
     checkNegative bound = if bound == '0' then 9 else digitToInt bound - 1
-    decrementBound bound = intToDigit $ bounds !! checkNegative bound
-    moveNorth = incrementBound y
-    moveSouth = decrementBound y
-    moveEast = incrementBound x
-    moveWest = decrementBound x
+    decrement bound = intToDigit $ bounds !! checkNegative bound
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = createPosition x y nextDirection
