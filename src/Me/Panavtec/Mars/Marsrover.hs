@@ -45,7 +45,9 @@ move (x:',':y:',':direction:_)
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = makePosition x y nextDirection
-  where directions = if direction == 'L' then leftDirection else rightDirection
+  where directions
+          | direction == 'L' = leftDirection
+          | direction == 'R' = rightDirection
         nextDirection = directions !! nextIndex
         currentIndex = elemIndex currentDirection directions
         nextIndex = fromJust(currentIndex) + 1
