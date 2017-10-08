@@ -58,3 +58,5 @@ spec = do
       moveMars "RMMMMMMMMMM" `shouldBe` "0,0,E"
     it "when moving 10 times in the same direction after goingwest" $ do
       moveMars "LMMMMMMMMMM" `shouldBe` "0,0,W"
+    it "when moving 10 times in the same direction after going south" $ do
+      moveMars "LLMMMMMMMMMM" `shouldBe` "0,0,S"

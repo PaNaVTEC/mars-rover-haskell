@@ -18,12 +18,14 @@ move (x:',':y:',':direction:_)
   | direction == 'E' = moveEast:',':y:',':'E':[]
   | direction == 'N' = x:',':moveNorth:',':'N':[]
   | direction == 'W' = moveWest:',':y:',':'W':[]
+  | direction == 'S' = x:',':moveNorth:',':'S':[]
   where
     bounds = cycle([0..9])
     incrementBound bound = intToDigit $ bounds !! (digitToInt bound + 1)
     checkNegative bound = if bound == '0' then 9 else digitToInt bound - 1
     decrementBound bound = intToDigit $ bounds !! checkNegative bound
     moveNorth = incrementBound y
+    moveSouth = decrementBound y
     moveEast = incrementBound x
     moveWest = decrementBound x
 
