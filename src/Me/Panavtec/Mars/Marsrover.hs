@@ -19,8 +19,9 @@ move (x:',':y:',':direction:_)
   | direction == 'N' = x:',':moveNorth:',':'N':[]
   where
     bounds = cycle([0..9])
-    moveNorth = intToDigit $ bounds !! (digitToInt y + 1)
-    moveEast = intToDigit $ bounds !! (digitToInt x + 1)
+    incrementBound bound = intToDigit $ bounds !! (digitToInt bound + 1)
+    moveNorth = incrementBound y
+    moveEast = incrementBound x
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
