@@ -15,6 +15,7 @@ moveMars orders = next orders "0,0,N"
         next ('R' : orders) position = next orders (rotate rightDirection position)
 
 rotate :: [Char] -> String -> String
-rotate directions (x:',':y:',':dir:_) = x:',':y:',': (next dir) :[]
-  where next dir = directions !! nextIndex
-        nextIndex = fromJust(elemIndex dir directions) + 1
+rotate directions (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
+  where nextDirection = directions !! nextIndex
+        currentIndex = elemIndex currentDirection directions
+        nextIndex = fromJust(currentIndex) + 1
