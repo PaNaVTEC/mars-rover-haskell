@@ -7,9 +7,10 @@ import           Data.Maybe
 
 leftDirection = cycle(['N', 'W', 'S', 'E'])
 rightDirection = cycle(['N', 'E', 'S', 'W'])
+initialPosition = "0,0,N"
 
 moveMars :: String -> String
-moveMars orders = foldl (\b a -> rotate a b) "0,0,N" orders
+moveMars orders = foldl (\position order -> rotate order position) initialPosition orders
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
