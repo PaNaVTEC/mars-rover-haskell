@@ -41,3 +41,6 @@ spec = do
       moveMars "RRR" `shouldBe` "0,0,W"
     it "4 Right" $ do
       moveMars "RRRR" `shouldBe` "0,0,N"
+
+    it "Combining LR" $ do
+      moveMars "LR" `shouldBe` "0,0,N"
