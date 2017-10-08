@@ -54,3 +54,5 @@ spec = do
   describe "Wraps around if out of the edge" $ do
     it "when moving 10 times in the same direction" $ do
       moveMars "MMMMMMMMMM" `shouldBe` "0,0,N"
+    it "when moving 10 times in the same direction" $ do
+      moveMars "RMMMMMMMMMM" `shouldBe` "0,0,E"

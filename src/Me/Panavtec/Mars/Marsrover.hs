@@ -20,7 +20,7 @@ move (x:',':y:',':direction:_)
   where
     bounds = cycle([0..9])
     moveNorth = intToDigit $ bounds !! (digitToInt y + 1)
-    moveEast = intToDigit ((digitToInt x) + 1)
+    moveEast = intToDigit $ bounds !! (digitToInt x + 1)
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = x:',':y:',': nextDirection :[]
