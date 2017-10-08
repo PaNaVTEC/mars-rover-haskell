@@ -15,16 +15,11 @@ moveMars orders = next orders "0,0,N"
         next ('R' : orders) position = next orders (rotateRight position)
 
 rotateRight :: String -> String
-rotateRight (x:',':y:',':'N':_) =  x:',':y:',':'E':[]
-rotateRight (x:',':y:',':'W':_) =  x:',':y:',':'N':[]
-rotateRight (x:',':y:',':'S':_) =  x:',':y:',':'W':[]
-rotateRight (x:',':y:',':'E':_) =  x:',':y:',':'S':[]
+rotateRight (x:',':y:',':dir:_) = x:',':y:',': (next dir) :[]
+  where next dir = rightDirection !! nextIndex
+        nextIndex = fromJust(elemIndex dir rightDirection) + 1
 
 rotateLeft :: String -> String
 rotateLeft (x:',':y:',':dir:_) = x:',':y:',': (next dir) :[]
   where next dir = leftDirection !! nextIndex
         nextIndex = fromJust(elemIndex dir leftDirection) + 1
---rotateLeft (x:',':y:',':'N':_) = x:',':y:',':'W':[]
---rotateLeft (x:',':y:',':'W':_) = x:',':y:',':'S':[]
---rotateLeft (x:',':y:',':'S':_) = x:',':y:',':'E':[]
---rotateLeft (x:',':y:',':'E':_) = x:',':y:',':'N':[]
