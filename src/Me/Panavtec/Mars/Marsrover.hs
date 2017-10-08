@@ -6,8 +6,11 @@ import           Data.Char
 import           Data.List
 import           Data.Maybe
 
+boardBound :: Int
+boardBound = 9
+
 bounds :: [Int]
-bounds = cycle([0..9])
+bounds = cycle([0..boardBound])
 
 leftDirection :: [Char]
 leftDirection = cycle(['N', 'W', 'S', 'E'])
@@ -35,8 +38,10 @@ move (x:',':y:',':direction:_)
   | direction == 'S' = makePosition x (decrement y) direction
   where
     increment bound = intToDigit $ bounds !! (digitToInt bound + 1)
-    checkNegative bound = if bound == '0' then 9 else digitToInt bound - 1
     decrement bound = intToDigit $ bounds !! checkNegative bound
+    checkNegative bound
+      | bound == '0' = boardBound
+      | otherwise = digitToInt bound - 1
 
 rotate :: Char -> String -> String
 rotate direction (x:',':y:',':currentDirection:_) = makePosition x y nextDirection
