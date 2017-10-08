@@ -6,9 +6,16 @@ import           Data.Char
 import           Data.List
 import           Data.Maybe
 
+bounds :: [Int]
 bounds = cycle([0..9])
+
+leftDirection :: [Char]
 leftDirection = cycle(['N', 'W', 'S', 'E'])
+
+rightDirection :: [Char]
 rightDirection = cycle(['N', 'E', 'S', 'W'])
+
+initialPosition :: String
 initialPosition = "0,0,N"
 
 moveMars :: String -> String
