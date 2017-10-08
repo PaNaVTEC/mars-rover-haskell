@@ -16,8 +16,8 @@ moveMars orders = foldl (\position order -> if order == 'M' then move position e
 move :: String -> String
 move (x:',':y:',':direction:_)
   | direction == 'E' = moveEast:',':y:',':'E':[]
-  | direction == 'N' = x:',':nextY:',':direction:[]
-  where nextY = intToDigit ((digitToInt y) + 1)
+  | direction == 'N' = x:',':moveNorth:',':'N':[]
+  where moveNorth = intToDigit $ cycle([0..9]) !! (digitToInt y + 1)
         moveEast = intToDigit ((digitToInt x) + 1)
 
 rotate :: Char -> String -> String
