@@ -1,8 +1,7 @@
-module Me.Panavtec.Mars.Marsrover (
-  moveMars
-  ) where
+module Me.Panavtec.Mars.Marsrover where
 
 import           Data.Char
+import           Data.Either
 import           Data.List
 import           Data.Maybe
 
@@ -12,7 +11,7 @@ boardBound = 9
 bounds :: [Int]
 bounds = cycle([0..boardBound])
 
-data Coordinate = Coordinate Int Int
+data Coordinate = Coordinate Int Int deriving Eq
 data Direction = N | W | S | E deriving (Show, Eq)
 data Position = Position Coordinate Direction
 data Rotate = L | R deriving Eq
@@ -26,26 +25,28 @@ rightDirection = cycle([N, E, S, W])
 initialPosition :: Position
 initialPosition = Position (Coordinate 0 0) N
 
-moveMars :: String -> String
-moveMars = showPosition . foldl interpret initialPosition
-  where interpret position order
-          | order == 'M' = move position
-          | order == 'L' = rotateLeft position
-          | order == 'R' = rotateRight position
+moveMars :: String -> [Coordinate] -> String
+moveMars orders obstacles = showPosition $ foldl interpret (Left initialPosition) orders
+  where interpret (Left position) order
+          | order == 'M' = move position obstacles
+          | order == 'L' = Left $ rotateLeft position
+          | order == 'R' = Left $ rotateRight position
 
-showPosition :: Position -> String
-showPosition (Position (Coordinate x y) d) = xx : ',' : yy : ',' : dd : []
-  where xx = intToDigit x
-        yy = intToDigit y
-        dd = head $ show d
+showPosition :: Either Position Position -> String
+showPosition p = case (p) of
+  (Left (Position (Coordinate x y) d))  -> format x y d
+  (Right (Position (Coordinate x y) d)) -> "O:" ++ format x y d
+  where format x y d = intToDigit x: ',' : intToDigit y: ',' : (dd d) : []
+        dd d = head $ show d
 
-move :: Position -> Position
-move (Position (Coordinate x y) direction)
-  | direction == E = Position (Coordinate (increment x) y) direction
-  | direction == N = Position (Coordinate x (increment y)) direction
-  | direction == W = Position (Coordinate (decrement x) y) direction
-  | direction == S = Position (Coordinate x (decrement y)) direction
+move :: Position -> [Coordinate] -> Either Position Position
+move (Position (Coordinate x y) direction) obstacles = if hasObstacle then Right (Position (Coordinate x y) direction) else Left (Position (nextCoordinate direction) direction)
   where
+    hasObstacle = elem (nextCoordinate direction) obstacles
+    nextCoordinate E = Coordinate (increment x) y
+    nextCoordinate N = Coordinate x (increment y)
+    nextCoordinate W = Coordinate (decrement x) y
+    nextCoordinate S = Coordinate x (decrement y)
     increment bound = modify bound (+1)
     decrement bound = modify bound (subtract 1)
     modify bound f = bounds !! noNegatives (f bound)
