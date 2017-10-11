@@ -23,27 +23,32 @@ main = hspec spec
 
 spec :: Spec
 spec = do
+
   describe "Rotations" $ do
-    it "1 Left" $ do
-      moveMars "L" `shouldBe` "0,0,W"
-    it "2 Left" $ do
-      moveMars "LL" `shouldBe` "0,0,S"
-    it "3 Left" $ do
-      moveMars "LLL" `shouldBe` "0,0,E"
-    it "4 Left" $ do
-      moveMars "LLLL" `shouldBe` "0,0,N"
+    describe "Left" $ do
+      it "1 Left" $ do
+        moveMars "L" `shouldBe` "0,0,W"
+      it "2 Left" $ do
+        moveMars "LL" `shouldBe` "0,0,S"
+      it "3 Left" $ do
+        moveMars "LLL" `shouldBe` "0,0,E"
+      it "4 Left" $ do
+        moveMars "LLLL" `shouldBe` "0,0,N"
 
-    it "1 Right" $ do
-      moveMars "R" `shouldBe` "0,0,E"
-    it "2 Right" $ do
-      moveMars "RR" `shouldBe` "0,0,S"
-    it "3 Right" $ do
-      moveMars "RRR" `shouldBe` "0,0,W"
-    it "4 Right" $ do
-      moveMars "RRRR" `shouldBe` "0,0,N"
+    describe "Right" $ do
+      it "1 Right" $ do
+        moveMars "R" `shouldBe` "0,0,E"
+      it "2 Right" $ do
+        moveMars "RR" `shouldBe` "0,0,S"
+      it "3 Right" $ do
+        moveMars "RRR" `shouldBe` "0,0,W"
+      it "4 Right" $ do
+        moveMars "RRRR" `shouldBe` "0,0,N"
 
-    it "Combining LR" $ do
-      moveMars "LR" `shouldBe` "0,0,N"
+    describe "Combinations" $ do
+      it "Combining LR" $ do
+        moveMars "LR" `shouldBe` "0,0,N"
+
   describe "Movements" $ do
     it "moves one point towards nord" $ do
       moveMars "M" `shouldBe` "0,1,N"
@@ -51,6 +56,7 @@ spec = do
       moveMars "MM" `shouldBe` "0,2,N"
     it "moves 1 position in X when facing east" $ do
       moveMars "RM" `shouldBe` "1,0,E"
+
   describe "Wraps around if out of the edge" $ do
     it "when moving 10 times in the same direction" $ do
       moveMars "MMMMMMMMMM" `shouldBe` "0,0,N"
