@@ -73,5 +73,5 @@ spec = do
 
   describe "Obstacles" $ do
     it "stops moving after finding obstacle" $ do
-      moveMars "RM" [(Coordinate 1 0)] `shouldBe` "O:0,0,E"
+      moveMars "RMM" [(Coordinate 1 0)] `shouldBe` "O:0,0,E"
 

@@ -33,6 +33,7 @@ moveMars orders obstacles = showPosition $ foldl interpret (Left initialPosition
           | order == 'M' = move position obstacles
           | order == 'L' = Left $ rotateLeft position
           | order == 'R' = Left $ rotateRight position
+        interpret o _ = o
 
 showPosition :: Either Position FoundObstacle -> String
 showPosition p = case (p) of
