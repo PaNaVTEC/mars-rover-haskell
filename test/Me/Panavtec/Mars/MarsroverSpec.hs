@@ -56,6 +56,8 @@ spec = do
       moveMars "MM" `shouldBe` "0,2,N"
     it "moves 1 position in X when facing east" $ do
       moveMars "RM" `shouldBe` "1,0,E"
+    it "moves 1 position (wrapping up) in X when facing west" $ do
+      moveMars "LM" `shouldBe` "9,0,W"
 
   describe "Wraps around if out of the edge" $ do
     it "when moving 10 times in the same direction" $ do
