@@ -14,6 +14,8 @@ bounds = cycle([0..boardBound])
 data Coordinate = Coordinate Int Int deriving Eq
 data Direction = N | W | S | E deriving (Show, Eq)
 data Position = Position Coordinate Direction
+type Obstacles = [Coordinate]
+type FoundObstacle = (Coordinate, Direction)
 data Rotate = L | R deriving Eq
 
 leftDirection :: [Direction]
@@ -25,22 +27,22 @@ rightDirection = cycle([N, E, S, W])
 initialPosition :: Position
 initialPosition = Position (Coordinate 0 0) N
 
-moveMars :: String -> [Coordinate] -> String
+moveMars :: String -> Obstacles -> String
 moveMars orders obstacles = showPosition $ foldl interpret (Left initialPosition) orders
   where interpret (Left position) order
           | order == 'M' = move position obstacles
           | order == 'L' = Left $ rotateLeft position
           | order == 'R' = Left $ rotateRight position
 
-showPosition :: Either Position Position -> String
+showPosition :: Either Position FoundObstacle -> String
 showPosition p = case (p) of
-  (Left (Position (Coordinate x y) d))  -> format x y d
-  (Right (Position (Coordinate x y) d)) -> "O:" ++ format x y d
+  (Left (Position (Coordinate x y) d)) -> format x y d
+  (Right ((Coordinate x y), d))        -> "O:" ++ format x y d
   where format x y d = intToDigit x: ',' : intToDigit y: ',' : (dd d) : []
         dd d = head $ show d
 
-move :: Position -> [Coordinate] -> Either Position Position
-move (Position (Coordinate x y) direction) obstacles = if hasObstacle then Right (Position (Coordinate x y) direction) else Left (Position (nextCoordinate direction) direction)
+move :: Position -> Obstacles -> Either Position FoundObstacle
+move (Position (Coordinate x y) direction) obstacles = if hasObstacle then Right ((Coordinate x y), direction) else Left (Position (nextCoordinate direction) direction)
   where
     hasObstacle = elem (nextCoordinate direction) obstacles
     nextCoordinate E = Coordinate (increment x) y
