@@ -12,40 +12,47 @@ boardBound = 9
 bounds :: [Int]
 bounds = cycle([0..boardBound])
 
-leftDirection :: [Char]
-leftDirection = cycle(['N', 'W', 'S', 'E'])
+data Coordinate = Coordinate Int Int
+data Direction = N | W | S | E deriving (Show, Eq)
+data Position = Position Coordinate Direction
 
-rightDirection :: [Char]
-rightDirection = cycle(['N', 'E', 'S', 'W'])
+leftDirection :: [Direction]
+leftDirection = cycle([N, W, S, E])
 
-initialPosition :: String
-initialPosition = "0,0,N"
+rightDirection :: [Direction]
+rightDirection = cycle([N, E, S, W])
+
+initialPosition :: Position
+initialPosition = Position (Coordinate 0 0) N
 
 moveMars :: String -> String
-moveMars = foldl interpret initialPosition
+moveMars = showPosition . foldl interpret initialPosition
   where interpret position order
           | order == 'M' = move position
           | order == 'R' || order == 'L'  = rotate order position
 
-makePosition :: Char -> Char -> Char -> String
-makePosition x y d = x : ',' : y : ',' : d : []
+showPosition :: Position -> String
+showPosition (Position (Coordinate x y) d) = xx : ',' : yy : ',' : dd : []
+  where xx = intToDigit x
+        yy = intToDigit y
+        dd = head $ show d
 
-move :: String -> String
-move (x:',':y:',':direction:_)
-  | direction == 'E' = makePosition (increment x) y direction
-  | direction == 'N' = makePosition x (increment y) direction
-  | direction == 'W' = makePosition (decrement x) y direction
-  | direction == 'S' = makePosition x (decrement y) direction
+move :: Position -> Position
+move (Position (Coordinate x y) direction)
+  | direction == E = Position (Coordinate (increment x) y) direction
+  | direction == N = Position (Coordinate x (increment y)) direction
+  | direction == W = Position (Coordinate (decrement x) y) direction
+  | direction == S = Position (Coordinate x (decrement y)) direction
   where
     increment bound = modify bound (+1)
     decrement bound = modify bound (subtract 1)
-    modify bound f = intToDigit $ bounds !! noNegatives (f $ digitToInt bound)
+    modify bound f = bounds !! noNegatives (f bound)
     noNegatives a
       | a < 0 = boardBound
       | otherwise = a
 
-rotate :: Char -> String -> String
-rotate direction (x:',':y:',':currentDirection:_) = makePosition x y nextDirection
+rotate :: Char -> Position -> Position
+rotate direction (Position (Coordinate x y) currentDirection) = Position (Coordinate x y) nextDirection
   where directions
           | direction == 'L' = leftDirection
           | direction == 'R' = rightDirection
