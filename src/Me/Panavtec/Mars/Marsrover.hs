@@ -15,6 +15,7 @@ bounds = cycle([0..boardBound])
 data Coordinate = Coordinate Int Int
 data Direction = N | W | S | E deriving (Show, Eq)
 data Position = Position Coordinate Direction
+data Rotate = L | R deriving Eq
 
 leftDirection :: [Direction]
 leftDirection = cycle([N, W, S, E])
@@ -29,7 +30,8 @@ moveMars :: String -> String
 moveMars = showPosition . foldl interpret initialPosition
   where interpret position order
           | order == 'M' = move position
-          | order == 'R' || order == 'L'  = rotate order position
+          | order == 'L' = rotateLeft position
+          | order == 'R' = rotateRight position
 
 showPosition :: Position -> String
 showPosition (Position (Coordinate x y) d) = xx : ',' : yy : ',' : dd : []
@@ -51,11 +53,17 @@ move (Position (Coordinate x y) direction)
       | a < 0 = boardBound
       | otherwise = a
 
-rotate :: Char -> Position -> Position
+rotateLeft :: Position -> Position
+rotateLeft = rotate L
+
+rotateRight :: Position -> Position
+rotateRight = rotate R
+
+rotate :: Rotate -> Position -> Position
 rotate direction (Position (Coordinate x y) currentDirection) = Position (Coordinate x y) nextDirection
   where directions
-          | direction == 'L' = leftDirection
-          | direction == 'R' = rightDirection
+          | direction == L = leftDirection
+          | direction == R = rightDirection
         nextDirection = directions !! nextIndex
         currentIndex = elemIndex currentDirection directions
         nextIndex = fromJust(currentIndex) + 1
